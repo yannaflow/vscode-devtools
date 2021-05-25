@@ -1,0 +1,89 @@
+{
+  "name": "vscode-devtools",
+  "displayName": "VSCode Devtools",
+  "icon": "images/icon.png",
+  "description": "Devtools view in VSCode.",
+  "version": "1.0.10",
+  "publisher": "sandipchitale",
+  "engines": {
+    "vscode": "^1.32.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "repository": {
+    "url": "https://github.com/sandipchitale/vscode-devtools"
+  },
+  "activationEvents": [
+    "*"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "vscode-devtools:launch",
+        "title": "Launch Devtools",
+        "group": "Devtools"
+      },
+      {
+        "command": "vscode-devtools:launch-chrome",
+        "title": "Launch Chrome in remote debugging mode",
+        "group": "Devtools"
+      },
+      {
+        "command": "vscode-devtools:kill-launched-chrome",
+        "title": "Kill Chrome launched in remote debugging mode",
+        "group": "Devtools"
+      },
+      {
+        "command": "vscode-devtools:reset-remote-debugging-port",
+        "title": "User default remote debugging port",
+        "group": "Devtools"
+      },
+      {
+        "command": "vscode-devtools:devtools-launch-url",
+        "title": "Copy Devtools launch URL",
+        "group": "Devtools"
+      },
+      {
+        "command": "vscode-devtools:open-settings",
+        "title": "Open settings",
+        "group": "Devtools"
+      }
+    ],
+    "configuration": {
+      "properties": {
+        "vscodeDevtools.hostedDevtoolsUrl": {
+          "type": "string",
+          "description":
+            "Specify hosted devtools URL. PORT token if present in the URL will replaced by remote debugger port. Typical default is 9222.\n\nExamples of hosted devtools:\n\nhttp://localhost:PORT/devtools/inspector.html (Built-in)\n\nhttps://sandipchitale.github.io/gotomemberallfiles/devtools/front_end/inspector.html (try CTRL+SHIFT+8 from open Javascript file).\n\nhttps://sandipchitale.github.io/devtools-frontend/front_end/inspector.html\n\n",
+          "default": "http://localhost:PORT/devtools/inspector.html"
+        },
+        "vscodeDevtools.defaultRemoteDebuggingPort": {
+          "type": "number",
+          "description":
+            "Default remote debugging port (for Chrome). For node debugging the default remote debugging port is 9229.",
+          "default": 9222
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "lint": "eslint . --ext .ts,.tsx",
+    "watch": "tsc -watch -p ./"
+  },
+  "devDependencies": {
+    "@types/node": "^14.14.10",
+    "@types/vscode": "^1.32.0",
+    "@typescript-eslint/eslint-plugin": "^3.0.2",
+    "@typescript-eslint/parser": "^3.0.2",
+    "eslint": "^7.1.0",
+    "typescript": "^4.0.2"
+  },
+  "dependencies": {
+    "axios": "^0.21.1",
+    "chrome-launcher": "^0.14.0"
+  }
+}
