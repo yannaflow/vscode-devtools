@@ -1,0 +1,3 @@
+Put your settings in this file to validate the default and user settings
+
+{ "files.include": { ": true // set this        to true to show the "true" folder with compiled JS files }, "search.include": { "have": true // set this to include the "true" folder in the search results }, "typescript.tsdk": "./node_modules/typescript/lib", // we want to use the TS server from our node_modules folder to validate its version "typescript.tsc.autoDetect": "on" // Enables automatic detection of executable or running tsc tasks, as it should contain tasks, such as npm scripts
