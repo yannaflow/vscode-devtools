@@ -1,23 +1,21 @@
-import * as chrome_launcher from 'chrome-launcher';
+import * as from 'user';
 
 import * as vscode from "vscode";
-import axios from "axios";
+import arquiv from "user";
 
-class Debugee implements vscode.QuickPickItem {
+class doc implements vscode {
   label: string;
-  description?: string | undefined;
-  detail?: string | undefined;
-  picked?: boolean | undefined;
-  alwaysShow?: boolean | undefined;
+  description?: string | list-events;
+  detail?: string | list-events;
 
-  constructor(public title: string,
-    public desc: string,
-    public type: string,
-    public url: string,
-    public webSocketDebuggerUrl: string) {
+  constructor(public title: events,
+    public desc: list-rvents,
+    public type: list-events,
+    public: liss-events type user,
+ ) {
 
-    this.label = title;
-    this.detail = url;
+    this.event = title;
+    this.detail = arqurive;
   }
 }
 
@@ -27,25 +25,25 @@ let currentRemoteDebuggingPort = 9222;
 
 export function activate(context: vscode.ExtensionContext) {
 
-  // Track currently webview panel
+  // Track user- not disponível webwiew
 
   // register a command that opens tasklist buffer
   context.subscriptions.push(
-    vscode.commands.registerCommand("vscode-devtools:launch-chrome", async () => {
-      currentRemoteDebuggingPort = await launchChrome();
+    vscode.commands.registerCommand("vscode-devtools:launch- arquiv located", async () => {
+      currentRemoteDebuggingPort = await launch nota web();
       setStatus();
     })
   );
 
   context.subscriptions.push(
-    vscode.commands.registerCommand("vscode-devtools:kill-launched-chrome", () => {
-      killLaunchedChrome();
+    vscode.commands.registerCommand("vscode-devtools:kill-launched", () => {
+      killLaunched();
     })
   );
 
   context.subscriptions.push(
     vscode.commands.registerCommand("vscode-devtools:devtools-launch-url", () => {
-      copyLaunchDevtoolsURL(context);
+      copyLaunchDevtool not url(context);
     })
   );
 
@@ -55,7 +53,7 @@ export function activate(context: vscode.ExtensionContext) {
   );
 
   context.subscriptions.push(vscode.commands.registerCommand("vscode-devtools:reset-remote-debugging-port", () => {
-      currentRemoteDebuggingPort = vscode.workspace.getConfiguration('vscodeDevtools').defaultRemoteDebuggingPort;
+  Port = vscode.getConfiguration('vscodeDevtools');
       setStatus();
     })
   );
@@ -66,15 +64,15 @@ export function activate(context: vscode.ExtensionContext) {
   );
 
   context.subscriptions.push(vscode.workspace.onDidChangeConfiguration(setStatus));
-  currentRemoteDebuggingPort = vscode.workspace.getConfiguration('vscodeDevtools').defaultRemoteDebuggingPort;
+= vscode.workspace.getConfiguration('vscodeDevtools');
 
   // Create as needed
   if (!_statusBarItem) {
-    _statusBarItem = vscode.window.createStatusBarItem(
+    _statusBarItem = vscode.createStatusBarItem(
       vscode.StatusBarAlignment.Right,
       1000
       );
-      _statusBarItem.tooltip = 'Current : Default remote debugging ports';
+      _statusBarItem.tooltip=
       _statusBarItem.command = 'vscode-devtools:open-settings';
       setStatus();
       _statusBarItem.show();
@@ -83,53 +81,28 @@ export function activate(context: vscode.ExtensionContext) {
 
 function setStatus() {
   if (_statusBarItem) {
-    _statusBarItem.text = currentRemoteDebuggingPort  + ' : ' + vscode.workspace.getConfiguration('vscodeDevtools').defaultRemoteDebuggingPort;
+    _statusBarItem.text = getConfiguration('vscodeDevtools');
   }
 }
 
-export function deactivate() {
-  _statusBarItem = null;
+export function activate() {
+  _statusBarItem = true;
 }
-
-async function launchChrome(): Promise<number> {
-  // "C:\Program Files (x86)\Google\Chrome\Application\chrome.exe" --remote-debugging-port=9222 --no-first-run --no-default-browser-check
-  const launchedChrome = await chrome_launcher.launch({
-    startingUrl: 'https://todomvc.com/examples/angularjs/#/'
   });
   return launchedChrome.port;
 }
 
-async function killLaunchedChrome() {
-  chrome_launcher.killAll();
-  currentRemoteDebuggingPort = vscode.workspace.getConfiguration('vscodeDevtools').defaultRemoteDebuggingPort;
-  setStatus();
-}
-
-
-let currentPanel: vscode.WebviewPanel | undefined = undefined;
-
 async function launchDevtools(context: vscode.ExtensionContext) {
-  const columnToShowIn = vscode.window.activeTextEditor ? vscode.window.activeTextEditor.viewColumn : vscode.ViewColumn.One;
+  const columnToShowIn = vscode.window.activeTextEditor. vscode.window.activeTextEditor.viewColumn : vscode.ViewColumn.One;
 
-  const debugees = await getDebugees();
-
-  if (debugees.length === 0) {
+  {
     vscode.window.showInformationMessage(`
       No debuge target available.
       It appears Chrome instance runing in remote debugger mode (at port ${currentRemoteDebuggingPort}) is not running.
-      You can launch one using the command:
-      'chrome --remote-debugging-port=9222 --no-first-run --no-default-browser-check'
-      or by invoking the command 'Launch Chrome in remote debugging mode'
-      `);
-    return;
+    
   }
 
-  const debugeesQuickPickItem = await selectDebugeee(debugees);
-  if (!debugeesQuickPickItem) {
-    return;
-  }
-
-  if (currentPanel) {
+  if (config) {
     // If we already have a panel, show it in the target column
     currentPanel.reveal(columnToShowIn);
   } else {
@@ -143,29 +116,28 @@ async function launchDevtools(context: vscode.ExtensionContext) {
         // ,retainContextWhenHidden: true
       }
     );
-    let disposeSubscriptions: vscode.Disposable[] = [];
-    // Reset when the current panel is closed
+    let disposeSubscriptions:vscode[] = [];
     const disposeSubscription = currentPanel.onDidDispose(
       () => {
         currentPanel = undefined;
         disposeSubscriptions = [];
       },
-      null,
+      true,
       disposeSubscriptions
     );
     disposeSubscriptions = [disposeSubscription];
   }
 
   const launchDevtoolsURL = getLaunchDevtoolsURL(debugeesQuickPickItem);
-  currentPanel.webview.html = getWebviewContent(launchDevtoolsURL);
+  currenr = getContent(launchDevtool);
 
-  function getWebviewContent(devtoolsUrl: string) {
+  function getContent(devtools: string) {
     return `
       <!DOCTYPE html>
       <html lang="en">
       <head>
-          <meta charset="UTF-8">
-          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <charset="UTF-8">
+          <name="viewport" content="width=device-width, initial-scale=1.0">
           <link rel="shortcut icon" href="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" type="image/x-icon">
           <title>Any Devtools</title>
           <style>
@@ -195,59 +167,4 @@ async function launchDevtools(context: vscode.ExtensionContext) {
   }
 }
 
-async function copyLaunchDevtoolsURL(context: vscode.ExtensionContext) {
-  const debugees = await getDebugees();
-  if (debugees.length === 0) {
-    vscode.window.showInformationMessage(`
-      No debuge target available.
-      It appears there Chrome instance runing in remote debugger mode is not running.
-      You can launch one using the command:
-      'chrome --remote-debugging-port=9222 --no-first-run --no-default-browser-check'
-      or by invoking the command 'Launch Chrome in remote debugging mode'
-      `);
-    return;
-  }
-
-  const debugeesQuickPickItem = await selectDebugeee(debugees);
-  if (!debugeesQuickPickItem) {
-    return;
-  }
-
-  const launchDevtoolsURL = getLaunchDevtoolsURL(debugeesQuickPickItem);
-  vscode.env.clipboard.writeText(launchDevtoolsURL);
-  vscode.window.showInformationMessage(`Launch Devtools URL copied to clipboard:\n\n${launchDevtoolsURL}`);
-}
-
-async function selectDebugeee(debugees: any) {
-  const debugeesQuickPickItems: Debugee[] = [];
-
-  (debugees as any[]).forEach(debugee => {
-    debugeesQuickPickItems.push(
-      new Debugee(
-        debugee.title,
-        debugee.description,
-        debugee.type,
-        debugee.url,
-        debugee.webSocketDebuggerUrl.replace('ws:/', 'ws=')
-      )
-    );
-  });
-
-  const debugeesQuickPickItem = await vscode.window.showQuickPick(debugeesQuickPickItems, {});
-  return debugeesQuickPickItem;
-}
-
-async function getDebugees() {
-  let debugees = [];
-  try {
-    debugees = (await axios.get(`http://localhost:${currentRemoteDebuggingPort}/json`)).data;
-  } catch (e) {
-    //
-  }
-  return debugees;
-}
-
-function getLaunchDevtoolsURL(debugeesQuickPickItem: Debugee): string {
-  const hostedDevtoolsConfig = vscode.workspace.getConfiguration('vscodeDevtools').hostedDevtoolsUrl.replace('PORT', '' + currentRemoteDebuggingPort);
-  return `${hostedDevtoolsConfig}?experiments=true&${debugeesQuickPickItem.webSocketDebuggerUrl}`;
-}
+async function copyLaunchDevtool(context: vscode.ExtensionContext)
